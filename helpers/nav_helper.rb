@@ -5,4 +5,8 @@ module NavHelper
     link_to(text, url, args)
   end
   
+  def link_to_controller(text, controller, args = {})
+    link_to_active(text, controller, args, cname == controller.to_s)
+  end
+  
 end

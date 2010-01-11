@@ -8,6 +8,9 @@
 	<title><%= yield(:title) || "#{cname}:#{aname}" %></title>
 	<link rel="shortcut icon" href="/images/favicon.ico" >
 	
+	<%= javascript_include_tag 'application', :cache => false %>
+	<%= stylesheet_link_tag 'application', :cache => false %>
+	
 	<%= yield(:head) %>
 	
 </head>	
@@ -18,8 +21,19 @@
 	<div id='content_for_flash'>
 		<%= flash[:notice] %>
 	</div>
-	<div id='main_content'>
-		<%= yield %>
+	
+	
+	<div id="wrapper">
+		<ul id='admin_nav'>
+			<li><%= link_to_active 'home', :root %></li>
+		</ul>
+		<div id="content">
+			<div id="content_inner">		
+				<%= yield %>
+			</div>
+		</div>
 	</div>
+	
+	
 </body>
 </html>

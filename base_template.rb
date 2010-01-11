@@ -37,6 +37,7 @@ file "app/helpers/nav_helper.rb", open('../templates/helpers/nav_helper.rb').rea
 # = INITIALIZERS =
 # ================
 file "config/initializers/mime_types.rb", open('../templates/initializers/mime_types.rb').read
+file "config/initializers/mime_types.txt", open('../templates/initializers/mime_types.txt').read
 file "config/initializers/fields_with_errors.rb", open('../templates/initializers/fields_with_errors.rb').read
 file "config/initializers/searchlogic.rb", open('../templates/initializers/searchlogic.rb').read
 
