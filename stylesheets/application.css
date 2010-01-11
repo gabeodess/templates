@@ -44,7 +44,7 @@ a{
 	border-left:					1px solid #4e4e4e;
 	margin:							0 2px 0 0;
 }
-#admin_nav li span.current{
+#admin_nav li .active{
 	display:						block;
 	float:							left;
 	text-decoration:				none;
