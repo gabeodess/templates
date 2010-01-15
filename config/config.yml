@@ -1,0 +1,12 @@
+development:
+  perform_authentication: false
+  shared_secret: 54044f74e079260c1df19ef174f4247f
+
+test:
+  perform_authentication: false
+
+production:
+  perform_authentication: true
+  username: Fuzz
+  password: 3018fuzz
+  shared_secret: 54044f74e079260c1df19ef174f4247f

@@ -6,19 +6,21 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  before_filter :my_basic_auth
+  before_filter :my_basic_auth, :redirect_no_www
     
   protected
-  def redirect_no_www      
-    if request.host.match(/^www/)
-      headers["Status"] = "301 Moved Permanently"
-      redirect_to(request.protocol + request.host.gsub(/^www./, '') + request.path)
+    def redirect_no_www      
+      if request.host.match(/^www/)
+        headers["Status"] = "301 Moved Permanently"
+        redirect_to(request.protocol + request.host.gsub(/^www./, '') + request.path)
+      end
     end
-  end
     
     def my_basic_auth
-      authenticate_or_request_with_http_basic do |username, password|
-        username == "Fuzz" && password == "3018fuzz"
+      if APP_CONFIG['perform_authentication']
+        authenticate_or_request_with_http_basic do |username, password|
+          username == APP_CONFIG['username'] && password == APP_CONFIG['password']
+        end
       end
     end
     

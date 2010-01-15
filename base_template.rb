@@ -1,11 +1,20 @@
 # => rails app_name -m templates/base_template.rb
 
+dir = File.dirname(__FILE__)
+puts "directory: #{`pwd`}"
+
 run "echo TODO > README"
+
+# =================
+# = CONFIGURATION =
+# =================
+file "config/config.yml", open('../templates/config/config.yml').read
+file "config/initializers/load_config.rb", open('../templates/initializers/load_config.rb').read
 
 # ===============
 # = STYLESHEETS =
 # ===============
-file "public/stylesheets/application.css", open('../templates/stylesheets/application.css').read
+file "public/stylesheets/application.css", open("../templates/stylesheets/application.css").read
 file "public/stylesheets/gallery.css", open('../templates/stylesheets/gallery.css').read
 file "public/stylesheets/overlay.css", open('../templates/stylesheets/overlay.css').read
 file "public/stylesheets/validation.css", open('../templates/stylesheets/validation.css').read
@@ -26,6 +35,12 @@ file "public/javascripts/application.js", open('../templates/javascripts/applica
 # = ERBs =
 # ========
 file "app/views/layouts/application.html.erb", open('../templates/layouts/application.html.erb').read
+
+# ===============
+# = CONTROLLERS =
+# ===============
+file "app/controllers/application_controller.rb", open('../templates/controllers/application_controller.rb').read
+generate :controller, "home index"
 
 # ===========
 # = HELPERS =
@@ -65,7 +80,6 @@ if auth = yes?("Do you want to use Restful Authentication?")
   end
 end
 
-generate :controller, "home index"
 route "map.root :controller => 'home'"
 run 'rm public/index.html'
 
