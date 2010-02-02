@@ -1,0 +1,17 @@
+development:
+  paypal_email: you@your_domain.com
+  paypal_secret: set_this_to_something_secret
+  paypal_cert_id: paypal_cert_id_goes_here
+  paypal_url: "https://www.sandbox.paypal.com/cgi-bin/webscr"
+
+test:
+  paypal_email: test@example.com
+  paypal_secret: testsecret
+  paypal_cert_id: 123456789
+  paypal_url: testpaypalurl
+
+production:
+  paypal_email: you@your_domain.com
+  paypal_secret: set_this_to_something_secret
+  paypal_cert_id: paypal_cert_id_goes_here
+  paypal_url: "https://www.sandbox.paypal.com/cgi-bin/webscr" #change this to www.paypal.com

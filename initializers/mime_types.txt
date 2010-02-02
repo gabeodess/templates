@@ -1,3 +1,6 @@
+audio/m4a	m4a
+audio/x-m4a	m4a
+application/octet-stream	m4a
 video/x-m4v	m4v
 image/x-png	png
 image/pjpeg	jpg

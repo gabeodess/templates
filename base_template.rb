@@ -1,9 +1,13 @@
 # => rails app_name -m templates/base_template.rb
 
-dir = File.dirname(__FILE__)
-puts "directory: #{`pwd`}"
+@todos ||= []
 
 run "echo TODO > README"
+
+# =======
+# = LIB =
+# =======
+run "cp ..templates/lib/validator.rb lib/validator.rb"
 
 # =================
 # = CONFIGURATION =
@@ -48,6 +52,11 @@ generate :controller, "home index"
 file "app/helpers/application_helper.rb", open('../templates/helpers/application_helper.rb').read
 file "app/helpers/nav_helper.rb", open('../templates/helpers/nav_helper.rb').read
 
+# ==========
+# = IMAGES =
+# ==========
+run "cp ../templates/images/* public/images"
+
 # ================
 # = INITIALIZERS =
 # ================
@@ -80,6 +89,14 @@ if auth = yes?("Do you want to use Restful Authentication?")
   end
 end
 
+if yes?('Would you like to set up gmail as your mail server?')
+  plugin 'action_mailer_optional_tls', :git => 'git://github.com/collectiveidea/action_mailer_optional_tls.git'
+  run 'cp ../templates/initializers/gmail_config.rb config/initializers/gmail_config.rb'
+  
+  @todos << "Edit config/initializers/gmail_config.rb to contain your gmail credentials."
+end
+
+
 route "map.root :controller => 'home'"
 run 'rm public/index.html'
 
@@ -98,3 +115,12 @@ run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 run "cp config/database.yml config/example_database.yml"
 
 git :add => ".", :commit => "-m 'adding authentication'"
+
+unless @todos.blank?
+  puts "\n\n-----------------------------------------------------------------"
+  puts "Your Ruby on Rails application has been created.\nTo get it up and running please complete the items listed below."
+  puts "-----------------------------------------------------------------\n\n"
+  puts @todos.map{|item| "\t=> #{item}\n\n"}.join
+  puts "\n-----------------------------------------------------------------"
+  puts "\n-----------------------------------------------------------------"
+end

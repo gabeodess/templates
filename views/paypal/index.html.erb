@@ -1,0 +1,13 @@
+<% form_tag APP_CONFIG['paypal_url'] do %>
+  <%= hidden_field_tag :cmd, "_s-xclick" %>
+  <%= hidden_field_tag(
+		:encrypted, 
+		Paypal.paypal_encrypted(payment_notifications_url(
+			:secret => APP_CONFIG['paypal_secret']), 
+			root_url,
+			{:price => 'your_price', :title => 'item title', :id => 'item_number'}
+		)
+	) %>
+	<p>Upon clicking the checkout button below you will be redirected to PayPal where you can purchase your item.</p>
+  <p><%= submit_tag "Checkout", :disable_with => "Redirecting to PayPal..." %></p>
+<% end %>
