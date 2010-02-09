@@ -9,6 +9,16 @@ class ApplicationController < ActionController::Base
   before_filter :my_basic_auth, :redirect_no_www
     
   protected
+    def set_iphone_format
+      if is_iphone_request?
+        request.format = :iphone
+      end
+    end
+    
+    def is_iphone_request?
+      request.user_agent =~ /(Mobile\/.+Safari)/
+    end
+    
     def redirect_no_www      
       if request.host.match(/^www/)
         headers["Status"] = "301 Moved Permanently"
