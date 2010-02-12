@@ -20,13 +20,15 @@ module NavHelper
   end
   
   def link_to_controller(controller, options = {})
-    text = options[:as] || controller.to_s.titleize
+    text = options.delete(:text) || controller.to_s.titleize
     link_to_active(text, controller, options, cname == controller.to_s)
   end
   
   def link_to_new(item, options = {})
-    text = options.delete(:text) || image_tag('new.png', :alt => "New #{item.to_s.titleize}", :title => "New #{item.to_s.titleize}")
-    link_to text, :"new_#{item.to_s}", options
+    options_text = options.delete(:text)
+    text = options_text || image_tag('new.png', :alt => "New #{item.to_s.titleize}", :title => "New #{item.to_s.titleize}")
+    @appendage = options[:append] || "Add New #{item.to_s.titleize}" unless options[:append] == false || (options_text && !options[:append])
+    link_to "#{text}#{@appendage}", send(:"new_#{item.to_s}_path", options[:item]), options
   end
   
   def link_to_edit(item, options = {})

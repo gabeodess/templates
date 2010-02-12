@@ -1,21 +1,21 @@
 $(document).ready(function(){
-	$(".gallery").gallery();
+	// $(".gallery").gallery();
 	
 	$(".draggable").draggable({
 		containment: 'parent'
 	});
 	
-	$('.dataTable').dataTable({
-		"bFilter": false,
-		"bLengthChange": false
-	});
-	$('.dataTableDesc').dataTable({
-		"bFilter": false,
-		"bLengthChange": false,
-		"aaSorting": [[0,'desc']]
-	});
-	
-	$('.overlay').overlay();
+	// $('.dataTable').dataTable({
+	// 	"bFilter": false,
+	// 	"bLengthChange": false
+	// });
+	// $('.dataTableDesc').dataTable({
+	// 	"bFilter": false,
+	// 	"bLengthChange": false,
+	// 	"aaSorting": [[0,'desc']]
+	// });
+	// 
+	// $('.overlay').overlay();
 	
 	$('.blind').click(function(){
 		if($($(this).attr('rel')).css('display') == 'none'){

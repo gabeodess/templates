@@ -7,7 +7,7 @@ run "echo TODO > README"
 # =======
 # = LIB =
 # =======
-run "cp ..templates/lib/validator.rb lib/validator.rb"
+run "cp ../templates/lib/validator.rb lib/validator.rb"
 
 # =================
 # = CONFIGURATION =
@@ -34,6 +34,7 @@ file "public/javascripts/overlay.js", open('../templates/javascripts/overlay.js'
 file "public/javascripts/gallery.js", open('../templates/javascripts/gallery.js').read
 file "public/javascripts/expose.js", open('../templates/javascripts/expose.js').read
 file "public/javascripts/application.js", open('../templates/javascripts/application.js').read
+file "public/javascripts/nav.js", open('../templates/javascripts/nav.js').read
 
 # ========
 # = ERBs =
@@ -55,7 +56,7 @@ file "app/helpers/nav_helper.rb", open('../templates/helpers/nav_helper.rb').rea
 # ==========
 # = IMAGES =
 # ==========
-run "cp ../templates/images/* public/images"
+run "cp -r ../templates/images/* public/images"
 
 # ================
 # = INITIALIZERS =
@@ -68,7 +69,7 @@ file "config/initializers/searchlogic.rb", open('../templates/initializers/searc
 # ===========
 # = PLUGINS =
 # ===========
-plugin 'will_paginate', :git => 'git://github.com/thoughtbot/paperclip'
+plugin 'will_paginate', :git => 'git://github.com/mislav/will_paginate.git'
 plugin 'searchlogic', :git => 'git://github.com/binarylogic/searchlogic.git'
 
 if yes?('Do you want to use Paperclip?')

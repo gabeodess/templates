@@ -81,9 +81,6 @@ a{
 	-webkit-border-radius: 			4px;
 	-moz-border-radius:				5px;
 }
-h1{
-	float:							left;
-}
 table{
 	float:							left;
 	width:							100%;
@@ -99,3 +96,33 @@ tr.current_row{
 	background:						#ffffaa !important;
 	cursor:							default;
 }
+
+/* ============== */
+/* = Nav Styles = */
+/* ============== */
+.nav_style_1{
+	padding-bottom:20px;
+}
+	.nav_style_1 li{
+		float:left;
+	}
+		.nav_style_1 li a{
+			display:block;
+			padding:20px;
+		}
+			.nav_style_1 li a.active{
+				-moz-border-radius-bottomleft:20px;
+				-moz-border-radius-bottomright:20px;
+				-moz-border-radius-topleft:20px;
+				-moz-border-radius-topright:20px;
+				-webkit-radius:20px;
+				background:#EFEFEF none repeat scroll 0 0;			}
+
+/* ================ */
+/* = Quick Styles = */
+/* ================ */
+.floatright{float:right;}
+.floatleft{float:left;}
+.clearboth{clear:both;}
+.padlr{padding:0 20px;}
+.padtb{padding:20px 0;}
