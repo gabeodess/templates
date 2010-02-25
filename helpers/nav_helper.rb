@@ -1,12 +1,19 @@
 module NavHelper
   
   def link_to_crud(item, options = {})
+    except = [options[:except]].flatten.map(&:to_sym)
+    items = []
+    items << link_to_show(item) unless except.include?(:show)
+    items << link_to_edit(item) unless except.include?(:edit)
+    items << link_to_destroy(item) unless except.include?(:destroy)
+    
     divider = options[:divider] || ' | '
-    content_tag('nobr', [link_to_show(item), link_to_edit(item), link_to_destroy(item)].join(divider))
+    content_tag('nobr', items.reject(&:nil?).join(divider))
   end
   
-  def link_to_external(text, url, options = {})
-    link_to text, 'http://' + url.gsub(/^\w+:/,''), options.merge(:popup => true)
+  def link_to_external(text, url = nil, options = {})
+    my_url ||= text
+    link_to text, 'http://' + my_url.gsub(/^\w+:/,''), options.merge(:popup => true)
   end
   
   def external_url(url, options = {})
@@ -20,8 +27,11 @@ module NavHelper
   end
   
   def link_to_controller(controller, options = {})
+    controllers = ([controller] << options.delete(:include)).flatten.reject(&:nil?).map(&:to_s)
     text = options.delete(:text) || controller.to_s.titleize
-    link_to_active(text, controller, options, cname == controller.to_s)
+    url = (options.delete(:url)) || controller
+    condition = (controllers.include?(cname) || request.url == url)
+    link_to_active(text, url, options, condition)
   end
   
   def link_to_new(item, options = {})

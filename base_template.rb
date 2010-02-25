@@ -65,6 +65,7 @@ file "config/initializers/mime_types.rb", open('../templates/initializers/mime_t
 file "config/initializers/mime_types.txt", open('../templates/initializers/mime_types.txt').read
 file "config/initializers/fields_with_errors.rb", open('../templates/initializers/fields_with_errors.rb').read
 file "config/initializers/searchlogic.rb", open('../templates/initializers/searchlogic.rb').read
+file "config/initializers/string.rb", open('../templates/initializers/string.rb').read
 
 # ===========
 # = PLUGINS =

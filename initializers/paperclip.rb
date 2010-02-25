@@ -1,3 +1,5 @@
+# Paperclip.options[:image_magick_path] = '/opt/local/bin' if Rails.env.development?
+
 # encoding: utf-8
 module Paperclip
   # The Attachment class manages the files for a given attachment. It saves

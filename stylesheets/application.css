@@ -30,6 +30,11 @@ a{
 	width:							900px;
 	margin:							auto;
 }
+#sidebar{
+	float:left;
+	margin-left:-170px;
+	width:100px;
+}
 #admin_nav{
 	float:							left;
 	width:							100%;
@@ -95,6 +100,15 @@ tr.row{
 tr.current_row{
 	background:						#ffffaa !important;
 	cursor:							default;
+}
+
+pre{
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#EFEFEF none repeat scroll 0 0;
+	overflow-x:scroll;
+	padding:20px;
 }
 
 /* ============== */

@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
+  # Scrub sensitive parameters from your log
+  filter_parameter_logging :password
+  
   before_filter :my_basic_auth, :redirect_no_www
     
   protected
