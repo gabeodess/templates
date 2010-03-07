@@ -29,6 +29,7 @@ module NavHelper
   def link_to_controller(controller, options = {})
     controllers = ([controller] << options.delete(:include)).flatten.reject(&:nil?).map(&:to_s)
     text = options.delete(:text) || controller.to_s.titleize
+    text += " (#{controller.to_s.singularize.camelcase.constantize.count})" if options[:include_count]
     url = (options.delete(:url)) || controller
     condition = (controllers.include?(cname) || request.url == url)
     link_to_active(text, url, options, condition)
