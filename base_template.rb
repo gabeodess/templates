@@ -98,6 +98,24 @@ if yes?('Would you like to set up gmail as your mail server?')
   @todos << "Edit config/initializers/gmail_config.rb to contain your gmail credentials."
 end
 
+if yes?('Would you like to set up PayPal as your payments gateway?')
+  run "cp ../templates/helpers/paypal_helper.rb app/helpers/paypal_helper.rb"
+
+  generate :scaffold, 'PaymentNotification params:text transaction_id:string status:string payer_email:string payment_gross:float invalid_secret:boolean'
+  run 'rm app/views/layouts/payment_notifications.html.erb'
+
+  generate :scaffold, 'LineItem product_id:integer quantity:integer unit_price:decimal'
+  run 'rm app/views/layouts/line_items.html.erb'
+
+  file "config/paypal_config.yml", open('../templates/config/paypal_config.yml').read
+  file "config/initializers/load_paypal_config.rb", open('../templates/initializers/load_paypal_config.rb').read
+  file "certs/README.rdoc", open('../templates/readmes/cert_readme.txt').read
+
+  @todos ||= []
+  @todos << "Edit config/paypal_config.yml to contain your paypal credentials."
+  @todos << "Copy your paypal certificates to the 'certs' directory."
+end
+
 
 route "map.root :controller => 'home'"
 run 'rm public/index.html'
@@ -116,7 +134,8 @@ END
 run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 run "cp config/database.yml config/example_database.yml"
 
-git :add => ".", :commit => "-m 'adding authentication'"
+git :add => "."
+git :commit => "-am 'adding authentication'"
 
 unless @todos.blank?
   puts "\n\n-----------------------------------------------------------------"
