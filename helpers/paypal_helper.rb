@@ -1,6 +1,6 @@
 module PaypalHelper
   
-  def form_for_paypal(line_items)
+  def form_for_paypal(line_items, options = {})
     form_tag APP_CONFIG['paypal_url'] do
        hidden_field_tag(:cmd, "_s-xclick") +
        hidden_field_tag(:encrypted, paypal_encrypted(line_items)) +
@@ -11,7 +11,8 @@ module PaypalHelper
   
   def paypal_encrypted(line_items, options = {})
     return_url = options[:return_url] || root_url
-    notify_url = options[:payment_notifications] || payment_notifications_url(:secret => APP_CONFIG['paypal_secret'])
+    notify_options = options[:notify_options] || {}
+    notify_url = payment_notifications_url({:secret => APP_CONFIG['paypal_secret']}.merge(notify_options)
     values = {
       :business => APP_CONFIG['paypal_email'],
       :cmd => '_cart',
@@ -37,8 +38,19 @@ module PaypalHelper
   APP_KEY_PEM = File.read("#{Rails.root}/certs/app_key.pem")
 
   def encrypt_for_paypal(values)
-    signed = OpenSSL::PKCS7::sign(OpenSSL::X509::Certificate.new(APP_CERT_PEM), OpenSSL::PKey::RSA.new(APP_KEY_PEM, ''), values.map { |k, v| "#{k}=#{v}" }.join("\n"), [], OpenSSL::PKCS7::BINARY)
-    OpenSSL::PKCS7::encrypt([OpenSSL::X509::Certificate.new(PAYPAL_CERT_PEM)], signed.to_der, OpenSSL::Cipher::Cipher::new("DES3"), OpenSSL::PKCS7::BINARY).to_s.gsub("\n", "")
+    signed = OpenSSL::PKCS7::sign(
+      OpenSSL::X509::Certificate.new(APP_CERT_PEM), 
+      OpenSSL::PKey::RSA.new(APP_KEY_PEM, ''), 
+      values.map { |k, v| "#{k}=#{v}" }.join("\n"), 
+      [], 
+      OpenSSL::PKCS7::BINARY
+    )
+    OpenSSL::PKCS7::encrypt(
+      [OpenSSL::X509::Certificate.new(PAYPAL_CERT_PEM)], 
+      signed.to_der, 
+      OpenSSL::Cipher::Cipher::new("DES3"), 
+      OpenSSL::PKCS7::BINARY
+    ).to_s.gsub("\n", "")
   end
   
   
