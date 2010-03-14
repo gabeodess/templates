@@ -12,7 +12,7 @@ module PaypalHelper
   def paypal_encrypted(line_items, options = {})
     return_url = options[:return_url] || root_url
     notify_options = options[:notify_options] || {}
-    notify_url = payment_notifications_url({:secret => APP_CONFIG['paypal_secret']}.merge(notify_options)
+    notify_url = payment_notifications_url({:secret => APP_CONFIG['paypal_secret']}.merge(notify_options))
     values = {
       :business => APP_CONFIG['paypal_email'],
       :cmd => '_cart',
