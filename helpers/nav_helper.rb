@@ -1,7 +1,7 @@
 module NavHelper
   
   def link_to_crud(item, options = {})
-    except = [options[:except]].flatten.map(&:to_sym)
+    except = [options[:except]].flatten.reject(&:nil?).map(&:to_sym)
     items = []
     items << link_to_show(item) unless except.include?(:show)
     items << link_to_edit(item) unless except.include?(:edit)
