@@ -77,6 +77,8 @@ if yes?('Do you want to use Paperclip?')
   plugin 'paperclip', :git => 'git://github.com/thoughtbot/paperclip' 
   file 'config/initializers/paperclip.rb', open('../templates/initializers/paperclip.rb').read
   file 'app/helpers/paperclip_helper.rb', open('../templates/helpers/paperclip_helper.rb').read
+  run 'cp ../templates/controllers/paperclip_controller.rb app/controllers/paperclip_controller.rb'
+  route "map.paperclip '/paperclip/:class_name/:id/:attachment', :controller => 'paperclip', :action => 'destroy', :method => :delete"
 end
 
 if auth = yes?("Do you want to use Restful Authentication?")
