@@ -29,7 +29,7 @@ module PaperclipHelper
       html_options
     )
   end
-  alias_method :link_to_destroy_paperclip
+  alias_method :link_to_destroy_paperclip, :link_to_delete_paperclip
   
   
 end
