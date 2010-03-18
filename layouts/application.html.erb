@@ -18,8 +18,13 @@
 	<div id='content_for_overlay'>
 		<%= yield :overlay %>
 	</div>
-	<div id='content_for_flash'>
-		<%= flash[:notice] %>
+
+	<div id='flash_wrapper'>
+		<%- if flash[:notice] -%>
+		<div id='content_for_flash'>
+			<%= flash[:notice] %>
+		</div>
+		<%- end -%>
 	</div>
 	
 	

@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	// $(".gallery").gallery();
 	
+	$('form:first input[type=text]:first').focus();
+	
 	$(".draggable").draggable({
 		containment: 'parent'
 	});
