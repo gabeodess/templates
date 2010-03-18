@@ -1,11 +1,19 @@
 $(document).ready(function(){
+	
+	// ================
+	// = Flash Notice =
+	// ================
+	$('#content_for_flash').show('blind', {direction:'vertical'}, 500);
+	$('#content_for_flash').fadeOut(10000);
+	
+	
 	// $(".gallery").gallery();
 	
 	$('form:first input[type=text]:first').focus();
 	
-	$(".draggable").draggable({
-		containment: 'parent'
-	});
+	// $(".draggable").draggable({
+	// 	containment: 'parent'
+	// });
 	
 	// $('.dataTable').dataTable({
 	// 	"bFilter": false,
@@ -19,13 +27,13 @@ $(document).ready(function(){
 	// 
 	// $('.overlay').overlay();
 	
-	$('.blind').click(function(){
-		if($($(this).attr('rel')).css('display') == 'none'){
-			$($(this).attr('rel')).show('blind', {direction: 'vertical'}, 1000);
-			window.location.hash = $(this).attr('rel') + '=' + 'visible';
-		}else{
-			$($(this).attr('rel')).hide('blind', {direction: 'vertical'}, 1000);
-			window.location.hash = $(this).attr('rel') + '=' + 'hidden';
-		}
-	});
+	// $('.blind').click(function(){
+	// 	if($($(this).attr('rel')).css('display') == 'none'){
+	// 		$($(this).attr('rel')).show('blind', {direction: 'vertical'}, 1000);
+	// 		window.location.hash = $(this).attr('rel') + '=' + 'visible';
+	// 	}else{
+	// 		$($(this).attr('rel')).hide('blind', {direction: 'vertical'}, 1000);
+	// 		window.location.hash = $(this).attr('rel') + '=' + 'hidden';
+	// 	}
+	// });
 })
