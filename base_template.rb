@@ -28,13 +28,7 @@ file "public/stylesheets/dataTables.css", open('../templates/stylesheets/dataTab
 # ===============
 # = JAVASCRIPTS =
 # ===============
-file "public/javascripts/jquery.js", open('../templates/javascripts/jquery.js').read
-file "public/javascripts/jquery-ui.js", open('../templates/javascripts/jquery-ui.js').read
-file "public/javascripts/overlay.js", open('../templates/javascripts/overlay.js').read
-file "public/javascripts/gallery.js", open('../templates/javascripts/gallery.js').read
-file "public/javascripts/expose.js", open('../templates/javascripts/expose.js').read
-file "public/javascripts/application.js", open('../templates/javascripts/application.js').read
-file "public/javascripts/nav.js", open('../templates/javascripts/nav.js').read
+run "cp -r ../templates/javascripts/* public/javascripts"
 
 # ========
 # = ERBs =
