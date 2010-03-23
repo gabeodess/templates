@@ -1,7 +1,7 @@
 class Validator
   cattr_accessor :login_regex, :bad_login_message, 
     :name_regex, :bad_name_message,
-    :email_name_regex, :domain_head_regex, :domain_tld_regex, :email_regex, :bad_email_message
+    :email_name_regex, :domain_head_regex, :domain_tld_regex, :email_regex, :bad_email_message, :currency_regex
 
   self.login_regex       = /\A\w[\w\.\-_@]+\z/                     # ASCII, strict
   # self.login_regex       = /\A[[:alnum:]][[:alnum:]\.\-_@]+\z/     # Unicode, strict
@@ -19,4 +19,6 @@ class Validator
   self.bad_email_message = "should look like an email address.".freeze
   
   self.zip_code_regex = /^\d{5}([\-]\d{4})?$/
+  self.currency_regex = /^\$[\d,]$|^\$[\d,].\d$|^\$.\d+$|^[\d,]$|^[\d,].\d+$|^.\d+$/
+  
 end
