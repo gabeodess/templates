@@ -1,4 +1,4 @@
-# Paperclip.options[:image_magick_path] = '/opt/local/bin' if Rails.env.development?
+# Paperclip.options[:command_path] = '/opt/local/bin' if Rails.env.development?
 
 # encoding: utf-8
 module Paperclip

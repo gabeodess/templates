@@ -1,3 +1,4 @@
+audio/mp3	mp3
 audio/m4a	m4a
 audio/x-m4a	m4a
 application/octet-stream	m4a
