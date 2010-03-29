@@ -9,16 +9,16 @@ Description
     This will save loads of time!
 
 Requirements
-    - This folder needs to be in the same directory where you are creating your rails application.
-    - You must have internet access to install plugins.
+- This folder needs to be in the same directory where you are creating your rails application.
+- You must have internet access to install plugins.
 
 Features
-    - Automatic includes: will_paginate, searchlogic
-    - Paperclip (optional) with custom paperclip helpers
-    - Includes custom navigation helpers
-    - Restful Authentication configuration
-    - Gmail SMTP configuration
-    - PayPal checkout configuration with custom paperclip helpers
+- Automatic includes: will_paginate, searchlogic
+- Paperclip (optional) with custom paperclip helpers
+- Includes custom navigation helpers
+- Restful Authentication configuration
+- Gmail SMTP configuration
+- PayPal checkout configuration with custom paperclip helpers
 
 Example
-    - rails my_app -m templates/base_template.rb
+- rails my_app -m templates/base_template.rb
