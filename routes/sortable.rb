@@ -1,0 +1,1 @@
+map.sortable '/sortable/:class_name', :controller => 'sortables', :action => 'update', :method => :put

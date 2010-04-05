@@ -125,6 +125,7 @@ tmp/**/*
 config/database.yml
 db/schema.rb
 db/*.sqlite3
+public/system/*
 END
 
 run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
