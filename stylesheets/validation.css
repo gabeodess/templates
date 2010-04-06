@@ -28,11 +28,12 @@
   margin: -7px;
   background-color: #c00;
   color: #fff;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-topright: 5px;
-
-	-webkit-border-radius-topleft: 5px;
-	-webkit-border-radius-topright: 5px;
+  -moz-border-top-right-radius: 8px; /* FF1+ */
+  -moz-border-top-left-radius: 8px; /* FF1+ */
+  -webkit-border-top-right-radius: 8px; /* Saf3+, Chrome */
+  -webkit-border-top-left-radius: 8px; /* Saf3+, Chrome */
+  border-top-right-radius: 8px; /* Opera 10.5, IE 9 */
+  border-top-left-radius: 8px; /* Opera 10.5, IE 9 */
 }
 
 #errorExplanation p {
