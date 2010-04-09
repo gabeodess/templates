@@ -1,3 +1,13 @@
+function zebra(item){
+  var toggle = 'even';
+  item.children().each(function(){
+    $(this).removeClass('even');
+    $(this).removeClass('odd');
+    if(toggle == 'even'){toggle = 'odd'}else{toggle = 'even'}
+    $(this).addClass(toggle);
+  })
+}
+
 $(document).ready(function(){
 	
 	// ================
