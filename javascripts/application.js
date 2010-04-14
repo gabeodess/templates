@@ -35,8 +35,8 @@ $(document).ready(function(){
 	// 	"aaSorting": [[0,'desc']]
 	// });
 	// 
-	// $('.overlay').overlay();
-	
+  // $('.overlay[rel]').overlay({});  
+
 	// $('.blind').click(function(){
 	// 	if($($(this).attr('rel')).css('display') == 'none'){
 	// 		$($(this).attr('rel')).show('blind', {direction: 'vertical'}, 1000);

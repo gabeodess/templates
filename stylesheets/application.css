@@ -132,12 +132,37 @@ pre{
 				-webkit-radius:20px;
 				background:#EFEFEF none repeat scroll 0 0;			}
 
+/* =========== */
+/* = Sub Nav = */
+/* =========== */
+#subnav{
+  height:80px;
+}
+  #subnav li{
+    display: block;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    margin-right: 20px;
+  }
+    #subnav li a{
+      display:block;
+      padding:0 12px;
+         -moz-border-radius: 12px; /* FF1+ */
+      -webkit-border-radius: 12px; /* Saf3+, Chrome */
+              border-radius: 12px; /* Opera 10.5, IE 9 */
+    }
+      #subnav li a.active{
+        background:#efefef;
+      }
+
 /* ================ */
 /* = Quick Styles = */
 /* ================ */
 .floatright{float:right;}
 .floatleft{float:left;}
 .clearboth{clear:both;}
+.clear{clear:both;}
 .padlr{padding:0 20px;}
 .padtb{padding:20px 0;}
 
