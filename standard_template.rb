@@ -7,7 +7,7 @@ run "echo TODO > README"
 # =======
 # = LIB =
 # =======
-lib "validator.rb", <<-RUBY
+lib "validator.rb", <<-CODE
 class Validator
   cattr_accessor :login_regex, :bad_login_message, 
     :name_regex, :bad_name_message, :zip_code_regex,
@@ -32,7 +32,7 @@ class Validator
   self.currency_regex = /^\$[\d,]+$|^\$[\d,]+\.\d$|^\$\.\d+$|^[\d,]+$|^[\d,]+\.\d+$|^\.\d+$/
   
 end
-RUBY
+CODE
 
 # =================
 # = CONFIGURATION =
