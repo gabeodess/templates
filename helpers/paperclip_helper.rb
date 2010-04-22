@@ -19,16 +19,29 @@ module PaperclipHelper
     my_id = html_options[:id] ||= "delete_#{item.class}_#{attachment}_#{item.id}"
     attachment_id = options[:attachment_id] || "#{item.class}_#{attachment}_#{item.id}"
     text = options[:text] || "Delete #{attachment.to_s.titleize}"
-    link_to_remote(
-      text, 
-      {
-        :url => paperclip_path(item.class.to_s, item.id, attachment.to_s), 
-        :method => :delete,
-        :loading => "document.getElementById('#{my_id}').innerHTML = 'Deleting...'",
-        :success => "document.getElementById('#{my_id}').innerHTML = 'Done.'; document.getElementById('#{attachment_id}').style.display = 'none'"
-      },
-      html_options
-    )
+    # link_to_remote(
+    #   text, 
+    #   {
+    #     :url => paperclip_path(item.class.to_s, item.id, attachment.to_s), 
+    #     :method => :delete,
+    #     :loading => "document.getElementById('#{my_id}').innerHTML = 'Deleting...'",
+    #     :success => "document.getElementById('#{my_id}').innerHTML = 'Done.'; document.getElementById('#{attachment_id}').style.display = 'none'"
+    #   },
+    #   html_options
+    # )
+    html_options[:onclick] = <<-JAVASCRIPT
+    $.ajax({
+      url: '#{paperclip_path(item.class.to_s, item.id, attachment.to_s)}',
+      data: {method:'_delete'},
+      loading: function(){document.getElementById('#{my_id}').innerHTML = 'Deleting...'},
+      success: function(){
+        document.getElementById('#{my_id}').innerHTML = 'Done.'; 
+        document.getElementById('#{attachment_id}').style.display = 'none';
+      }
+    });
+    return false
+    JAVASCRIPT
+    link_to(text, nil, html_options)
   end
   alias_method :link_to_destroy_paperclip, :link_to_delete_paperclip
   

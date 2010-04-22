@@ -1,68 +1,29 @@
 # => rails app_name -m templates/base_template.rb
 
 @todos ||= []
+@path = "http://github.com/gabeodess/templates/raw/master"
 
 run "echo TODO > README"
 
 # =======
 # = LIB =
 # =======
-lib "validator.rb", <<-CODE
-class Validator
-  cattr_accessor :login_regex, :bad_login_message, :name_regex, :bad_name_message, :zip_code_regex, :email_name_regex, :domain_head_regex, :domain_tld_regex, :email_regex, :bad_email_message, :currency_regex
-
-  self.login_regex       = /\A\w[\w\.\-_@]+\z/                     # ASCII, strict
-  # self.login_regex       = /\A[[:alnum:]][[:alnum:]\.\-_@]+\z/     # Unicode, strict
-  # self.login_regex       = /\A[^[:cntrl:]\\<>\/&]*\z/              # Unicode, permissive
-
-  self.bad_login_message = "use only letters, numbers, and .-_@ please.".freeze
-
-  self.name_regex        = /\A[^[:cntrl:]\\<>\/&]*\z/              # Unicode, permissive
-  self.bad_name_message  = "avoid non-printing characters and \\&gt;&lt;&amp;/ please.".freeze
-
-  # self.email_name_regex  = '[\w\.%\+\-]+'.freeze
-  self.domain_head_regex = '(?:[A-Z0-9\-]+\.)+'.freeze
-  self.domain_tld_regex  = '(?:[A-Z]{2}|com|org|net|edu|gov|mil|biz|info|mobi|name|aero|jobs|museum)'.freeze
-  self.email_regex       = /\A#{email_name_regex}@#{domain_head_regex}#{domain_tld_regex}\z/i
-  self.bad_email_message = "should look like an email address.".freeze
-  
-  self.zip_code_regex = /^\d{5}([\-]\d{4})?$/
-  self.currency_regex = /^\$[\d,]+$|^\$[\d,]+\.\d$|^\$\.\d+$|^[\d,]+$|^[\d,]+\.\d+$|^\.\d+$/
-  
-end
-CODE
+lib "validator.rb", open("#{@path}/lib/validator.rb")
 
 # =================
 # = CONFIGURATION =
 # =================
-config "config.yml", <<-YAML
-development:
-  perform_authentication: false
-  username: admin
-  password: password
-  shared_secret: 54044f74e079260c1df19ef174f4247f
-
-test:
-  perform_authentication: false
-
-production:
-  perform_authentication: true
-  username: admin
-  password: password
-  shared_secret: 54044f74e079260c1df19ef174f4247f
-YAML
-initializer "load_config.rb", <<-RUBY
-APP_CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")[RAILS_ENV]
-RUBY
+file "config/config.yml", open("#{@path}/config/config.yml").read
+file "config/initializers/load_config.rb", open("#{@path}/initializers/load_config.rb").read
 
 # ===============
 # = STYLESHEETS =
 # ===============
-file "public/stylesheets/application.css", open("../templates/stylesheets/application.css").read
-file "public/stylesheets/gallery.css", open('../templates/stylesheets/gallery.css').read
-file "public/stylesheets/overlay.css", open('../templates/stylesheets/overlay.css').read
-file "public/stylesheets/validation.css", open('../templates/stylesheets/validation.css').read
-file "public/stylesheets/dataTables.css", open('../templates/stylesheets/dataTables.css').read
+file "public/stylesheets/application.css", open("#{@path}/stylesheets/application.css").read
+file "public/stylesheets/gallery.css", open("#{@path}/stylesheets/gallery.css").read
+file "public/stylesheets/overlay.css", open("#{@path}/stylesheets/overlay.css").read
+file "public/stylesheets/validation.css", open("#{@path}/stylesheets/validation.css").read
+file "public/stylesheets/dataTables.css", open("#{@path}/stylesheets/dataTables.css").read
 
 
 # ===============
@@ -73,19 +34,19 @@ run "cp -r ../templates/javascripts/* public/javascripts"
 # ========
 # = ERBs =
 # ========
-file "app/views/layouts/application.html.erb", open('../templates/layouts/application.html.erb').read
+file "app/views/layouts/application.html.erb", open("#{@path}/layouts/application.html.erb").read
 
 # ===============
 # = CONTROLLERS =
 # ===============
-file "app/controllers/application_controller.rb", open('../templates/controllers/application_controller.rb').read
+file "app/controllers/application_controller.rb", open("#{@path}/controllers/application_controller.rb").read
 generate :controller, "home index"
 
 # ===========
 # = HELPERS =
 # ===========
-file "app/helpers/application_helper.rb", open('../templates/helpers/application_helper.rb').read
-file "app/helpers/nav_helper.rb", open('../templates/helpers/nav_helper.rb').read
+file "app/helpers/application_helper.rb", open("#{@path}/helpers/application_helper.rb").read
+file "app/helpers/nav_helper.rb", open("#{@path}/helpers/nav_helper.rb").read
 
 # ==========
 # = IMAGES =
@@ -95,11 +56,11 @@ run "cp -r ../templates/images/* public/images"
 # ================
 # = INITIALIZERS =
 # ================
-file "config/initializers/mime_types.rb", open('../templates/initializers/mime_types.rb').read
-file "config/initializers/mime_types.txt", open('../templates/initializers/mime_types.txt').read
-file "config/initializers/fields_with_errors.rb", open('../templates/initializers/fields_with_errors.rb').read
-file "config/initializers/searchlogic.rb", open('../templates/initializers/searchlogic.rb').read
-file "config/initializers/string.rb", open('../templates/initializers/string.rb').read
+file "config/initializers/mime_types.rb", open("#{@path}/initializers/mime_types.rb").read
+file "config/initializers/mime_types.txt", open("#{@path}/initializers/mime_types.txt").read
+file "config/initializers/fields_with_errors.rb", open("#{@path}/initializers/fields_with_errors.rb").read
+file "config/initializers/searchlogic.rb", open("#{@path}/initializers/searchlogic.rb").read
+file "config/initializers/string.rb", open("#{@path}/initializers/string.rb").read
 
 # ===========
 # = PLUGINS =
@@ -109,8 +70,8 @@ plugin 'searchlogic', :git => 'git://github.com/binarylogic/searchlogic.git'
 
 if yes?('Do you want to use Paperclip?')
   plugin 'paperclip', :git => 'git://github.com/thoughtbot/paperclip' 
-  file 'config/initializers/paperclip.rb', open('../templates/initializers/paperclip.rb').read
-  file 'app/helpers/paperclip_helper.rb', open('../templates/helpers/paperclip_helper.rb').read
+  file 'config/initializers/paperclip.rb', open("#{@path}/initializers/paperclip.rb").read
+  file 'app/helpers/paperclip_helper.rb', open("#{@path}/helpers/paperclip_helper.rb").read
   run 'cp ../templates/controllers/paperclip_controller.rb app/controllers/paperclip_controller.rb'
   route "map.paperclip '/paperclip/:class_name/:id/:attachment', :controller => 'paperclip', :action => 'destroy', :method => :delete"
 end
@@ -122,7 +83,7 @@ if auth = yes?("Do you want to use Restful Authentication?")
   
   if yes?("Do you want to use declarative authorization?")
     plugin "declarative_authorization", :git => "git://github.com/stffn/declarative_authorization.git"
-    file "app/helpers/declarative_authorization_helper.rb", open('../templates/helpers/declarative_authorization_helper.rb').read
+    file "app/helpers/declarative_authorization_helper.rb", open("#{@path}/helpers/declarative_authorization_helper.rb").read
     run "cp ../templates/config/authorization_rules.rb app/config/"
     generate :scaffold, "Role name:string"
   end
@@ -144,9 +105,9 @@ if yes?('Would you like to set up PayPal as your payments gateway?')
   generate :scaffold, 'LineItem product_id:integer quantity:integer unit_price:decimal'
   run 'rm app/views/layouts/line_items.html.erb'
 
-  file "config/paypal_config.yml", open('../templates/config/paypal_config.yml').read
-  file "config/initializers/load_paypal_config.rb", open('../templates/initializers/load_paypal_config.rb').read
-  file "certs/README.rdoc", open('../templates/readmes/cert_readme.txt').read
+  file "config/paypal_config.yml", open("#{@path}/config/paypal_config.yml").read
+  file "config/initializers/load_paypal_config.rb", open("#{@path}/initializers/load_paypal_config.rb").read
+  file "certs/README.rdoc", open("#{@path}/readmes/cert_readme.txt").read
 
   @todos ||= []
   @todos << "Edit config/paypal_config.yml to contain your paypal credentials."
