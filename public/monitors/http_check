@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# This file is an example, it is server specific and should be configured to your server's specifications.
+#	This script should be run as a cron-job to periodically check to make sure the server is serving HTTP properly.
+# Ex: */5 * * * * /bin/bash -x /home/csradmin/current/public/monitors/http_check
+
+# Gotchas
+# Make sure that the name of this file has no extention.
+
+MYURL="http://www.csrwire.com"
+CHECK="pgrep apache2"
+START="/etc/init.d/apache2 start"
+RESTART="/etc/init.d/apache2 restart"
+DATE=`date`
+CKFILE='/home/csradmin/check.htm'
+LOGPATH='/home/csradmin/log'
+LOG='/home/csradmin/log/apache_check.log'
+PSLOG=$LOGPATH'/ps.log'
+
+rm $CKFILE
+touch $CKFILE
+wget -O $CKFILE -t 1 -T 10 $MYURL
+
+if ! $CHECK > /dev/null 
+then
+  echo 'apache is down at ' $DATE >> $LOG
+  $START
+  echo 'apache restarted at' $DATE >> /etc/httpd/restartlog.log
+  # echo 'apache restarted at' $DATE >> $LOG
+elif ! [ -s $CKFILE ]
+then
+  echo 'apache is up but not serving HTTP at' $DATE >> $LOG
+  echo $(date) >> $PSLOG
+  ps aux | grep rake >> $PSLOG
+  ps aux | grep mysqld >> $PSLOG
+  $RESTART
+  # echo 'apache restarted at' $DATE >> $LOG
+else
+  echo 'apache is up at' $DATE
+  exit 0
+fi
