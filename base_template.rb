@@ -84,7 +84,7 @@ if auth = yes?("Do you want to use Restful Authentication?")
     plugin "declarative_authorization", :git => "git://github.com/stffn/declarative_authorization.git"
     file "app/helpers/declarative_authorization_helper.rb", open('../templates/helpers/declarative_authorization_helper.rb').read
     run "cp ../templates/config/authorization_rules.rb app/config/"
-    generate :scaffold, "Role name:string"
+    # generate :scaffold, "Role name:string"
   end
 end
 
