@@ -35,7 +35,9 @@ $(document).ready(function(){
 	// 	"aaSorting": [[0,'desc']]
 	// });
 	// 
-  // $('.overlay[rel]').overlay({});  
+  // $('.overlay[rel]').overlay({
+  //   onLoad:function(event){$(event.srcElement.rel).find('input:first').focus()}
+  // });  
 
 	// $('.blind').click(function(){
 	// 	if($($(this).attr('rel')).css('display') == 'none'){
