@@ -24,11 +24,12 @@ end
 
 PAPERCLIP_URL = "paperclip/:class/:attachment/:id/:style/:filename.:extension"
 PAPERCLIP_SETTINGS = {
-  :path => Rails.root.join('public', PAPERCLIP_URL),
+  :path => Rails.root.join('public', PAPERCLIP_URL).to_s,
   :url => PAPERCLIP_URL,
   :convert_options => { :all => '-strip -colorspace RGB'}
 }
-PAPERCLIP_SETTINGS.merge!{
+PAPERCLIP_SETTINGS.merge!({
   :storage => :s3,
+  :s3_credentials => Rails.root.join("config/s3.yml").to_s,
   :bucket => CONFIG['s3_bucket']
-} unless CONFIG['s3_bucket'].blank?
+}) unless CONFIG['s3_bucket'].blank?

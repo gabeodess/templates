@@ -24,9 +24,9 @@ class ApplicationController < ActionController::Base
     end
     
     def my_basic_auth
-      if APP_CONFIG['perform_authentication']
+      if CONFIG['perform_authentication']
         authenticate_or_request_with_http_basic do |username, password|
-          username == APP_CONFIG['username'] && password == APP_CONFIG['password']
+          username == CONFIG['username'] && password == CONFIG['password']
         end
       end
     end

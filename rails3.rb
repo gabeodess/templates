@@ -1,4 +1,4 @@
-# => rails app_name -m templates/base_template.rb
+# => rails new app_name -m templates/default.rb
 
 def copy_directory(source_path, destination_path)
   `cp -r #{source_path} #{destination_path}`
@@ -12,7 +12,10 @@ end
 
 @todos ||= []
 
-run "echo TODO > README"
+gemset = ask("What would you like your gemset to be called?")
+rvmrc = "rvm 1.8.7@#{gemset}"
+file ".rvmrc", rvmrc
+run rvmrc
 
 # =======
 # = LIB =
@@ -74,8 +77,14 @@ File.open("config/initializers/mime_types.rb", 'a'){ |f| f.puts(
 ) }
 # initializer('mime_types.rb'){ open('../templates/initializers/mime_types.rb').read  }
 initializer('mime_types.txt'){ open('../templates/initializers/mime_types.txt').read  }
-initializer('fields_with_errors.rb'){ open('../templates/initializers/fields_with_errors.rb').read  }
+# initializer('fields_with_errors.rb'){ open('../templates/initializers/fields_with_errors.rb').read  }
 initializer('string.rb'){ open('../templates/initializers/string.rb').read  }
+
+# ==============
+# = Generators =
+# ==============
+generator(File.expand_path("../generators/nifty", __FILE__))
+file("lib/generators/nifty.rb", File.read(File.expand_path("../generators/nifty.rb", __FILE__)))
 
 # ===========
 # = PLUGINS =
@@ -113,7 +122,7 @@ end
 
 if yes?('Would you like to set up PayPal as your payments gateway?')
   run "cp ../rails3_templates/helpers/paypal_helper.rb app/helpers/paypal_helper.rb"
-  run 'bundle install'
+
   generate :scaffold, 'PaymentNotification params:text transaction_id:string status:string payer_email:string payment_gross:float invalid_secret:boolean'
   generate :scaffold, 'LineItem product_id:integer quantity:integer unit_price:decimal'
 
@@ -136,7 +145,6 @@ END
 File.open(".gitignore", "a"){ |f| f.puts gitignore } 
 
 run "cp config/database.yml config/example_database.yml"
-run "bundle install"
 run "rake db:migrate"
 
 
