@@ -107,6 +107,8 @@ if auth = yes?("Do you want to use user authentication?")
   name = ask("What do you want a user to be called?")
   
   generator(File.expand_path("../generators/authentication", __FILE__))
+  
+  run "bundle install"
   generate :authentication, "#{name} sessions"
   
   if yes?("Do you want to use declarative authorization?")
@@ -146,12 +148,12 @@ END
 File.open(".gitignore", "a"){ |f| f.puts gitignore } 
 
 run "cp config/database.yml config/example_database.yml"
+run "bundle install"
 run "rake db:migrate"
 
-
-git :init
-git :add => "."
-git :commit => "-a -m 'initial commit'"
+# git :init
+# git :add => "."
+# git :commit => "-a -m 'initial commit'"
 
 unless @todos.blank?
   puts "\n\n-----------------------------------------------------------------"

@@ -1,1 +1,1 @@
-CONFIG = YAML.load_file("#{RAILS_ROOT}/config/config.yml")[RAILS_ENV]
+CONFIG = YAML.load_file(Rails.root.join("config/config.yml"))[Rails.env]
