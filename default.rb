@@ -1,7 +1,8 @@
 # => rails new app_name -m templates/default.rb
 
 def copy_directory(source_path, destination_path)
-  `cp -r #{source_path} #{destination_path}`
+  `mkdir #{destination_path}` unless File.directory?(destination_path)
+  `cp -R #{source_path} #{destination_path}`
 end
 
 def generator(path)
@@ -13,7 +14,7 @@ end
 @todos ||= []
 
 gemset = ask("What would you like your gemset to be called?")
-rvmrc = "rvm 1.8.7@#{gemset}"
+rvmrc = "rvm use --create 1.9.2@#{gemset}"
 file ".rvmrc", rvmrc
 run rvmrc
 
@@ -41,7 +42,7 @@ file "public/stylesheets/dataTables.css", open('../templates/stylesheets/dataTab
 # ===============
 # = JAVASCRIPTS =
 # ===============
-run "cp -r ../templates/javascripts/* public/javascripts"
+copy_directory "../templates/javascripts/*", "public/javascripts"
 
 # ========
 # = ERBs =
@@ -53,7 +54,7 @@ file "app/views/layouts/application.html.erb", open('../templates/layouts/applic
 # = CONTROLLERS =
 # ===============
 File.open("app/controllers/application_controller.rb", 'w'){ 
-  |f| f.write(File.read(File.expand_path('../rails3/application_controller.rb', __FILE__))) 
+  |f| f.write(File.read(File.expand_path('../controllers/application_controller.rb', __FILE__))) 
 }
 generate :controller, "home index"
 
@@ -67,7 +68,7 @@ file "app/helpers/nav_helper.rb", open('../templates/helpers/nav_helper.rb').rea
 # ==========
 # = IMAGES =
 # ==========
-run "cp -r ../templates/images/* public/images"
+copy_directory "../templates/images/*", "public/images"
 
 # ================
 # = INITIALIZERS =
@@ -121,14 +122,14 @@ if yes?('Would you like to set up gmail as your mail server?')
 end
 
 if yes?('Would you like to set up PayPal as your payments gateway?')
-  run "cp ../rails3_templates/helpers/paypal_helper.rb app/helpers/paypal_helper.rb"
+  run "cp ../helpers/paypal_helper.rb app/helpers/paypal_helper.rb"
 
   generate :scaffold, 'PaymentNotification params:text transaction_id:string status:string payer_email:string payment_gross:float invalid_secret:boolean'
   generate :scaffold, 'LineItem product_id:integer quantity:integer unit_price:decimal'
 
-  file "config/paypal_config.yml", open('../rails3_templates/config/paypal_config.yml').read
-  file "config/initializers/load_paypal_config.rb", open('../rails3_templates/initializers/load_paypal_config.rb').read
-  file "certs/README.rdoc", open('../rails3_templates/readmes/cert_readme.txt').read
+  file "config/paypal_config.yml", open('../config/paypal_config.yml').read
+  file "config/initializers/load_paypal_config.rb", open('../initializers/load_paypal_config.rb').read
+  file "certs/README.rdoc", open('../readmes/cert_readme.txt').read
 
   @todos ||= []
   @todos << "Edit config/paypal_config.yml to contain your paypal credentials."
