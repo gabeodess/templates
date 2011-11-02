@@ -1,12 +1,9 @@
-require "smtp_tls"
-
-ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
-    :tls => true,
-    :address => "smtp.gmail.com",
-    :port => "587",
-    :domain => "yourdomain.com",
-    :authentication => :plain,
-    :user_name => "you@gmail.com",
-    :password => "your_gmail_password" 
-  }
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :domain               => 'your.host.name',
+  :user_name            => '<username>',
+  :password             => '<password>',
+  :authentication       => 'plain',
+  :enable_starttls_auto => true
+}

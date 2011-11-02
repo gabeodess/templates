@@ -21,3 +21,14 @@ module Paperclip
     end
   end
 end
+
+PAPERCLIP_URL = "paperclip/:class/:attachment/:id/:style/:filename.:extension"
+PAPERCLIP_SETTINGS = {
+  :path => Rails.root.join('public', PAPERCLIP_URL),
+  :url => PAPERCLIP_URL,
+  :convert_options => { :all => '-strip -colorspace RGB'}
+}
+PAPERCLIP_SETTINGS.merge!{
+  :storage => :s3,
+  :bucket => CONFIG['s3_bucket']
+} unless CONFIG['s3_bucket'].blank?
