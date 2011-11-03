@@ -96,7 +96,7 @@ file("lib/generators/nifty.rb", File.read(File.expand_path("../generators/nifty.
 # ===========
 # = PLUGINS =
 # ===========
-gem "will_paginate", "3.0.pre2"
+gem "will_paginate", "3.0.2"
 gem "meta_search"
 gem 'ruby-debug19', :require => 'ruby-debug', :group => [:test, :development]
 

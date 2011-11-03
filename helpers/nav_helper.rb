@@ -36,6 +36,7 @@ module NavHelper
   end
   
   def link_to_new(item, options = {})
+    return unless permmitted_to?(:create, item)
     options_text = options.delete(:text)
     text = options_text || image_tag('new.png', :alt => "New #{item.to_s.titleize}", :title => "New #{item.to_s.titleize}")
     @appendage = options[:append] || "Add New #{item.to_s.titleize}" unless options[:append] == false || (options_text && !options[:append])
@@ -43,16 +44,19 @@ module NavHelper
   end
   
   def link_to_edit(item, options = {})
+    return unless permmitted_to?(:edit, item)
     text = options.delete(:text) || image_tag('edit.png', :alt => 'Edit', :title => 'Edit')
     link_to text, send("edit_#{item.class.to_s.tableize.singularize}_path", item), options
   end
 
   def link_to_show(item, options = {})
+    return unless permmitted_to?(:show, item)
     text = options.delete(:text) || image_tag('show.png', :alt => 'Show', :title => 'Show')
     link_to text, item, options
   end
   
   def link_to_destroy(item, options = {})
+    return unless permmitted_to?(:destroy, item)
     text = options.delete(:text) || image_tag('delete.png', :alt => 'Delete', :title => 'Delete')
     options[:method] = :delete
     options[:confirm] ||= "Are you sure?"
