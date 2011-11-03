@@ -30,18 +30,13 @@ a{
 	width:							900px;
 	margin:							auto;
 }
-#sidebar{
-	float:left;
-	margin-left:-170px;
-	width:100px;
-}
-#admin_nav{
+#nav{
 	float:							left;
 	width:							100%;
 	margin:							0;
 	padding:						0;
 }
-#admin_nav li{
+#nav li{
 	display:						inline;
 	float:							left;
 	border-top:						1px solid #4e4e4e;
@@ -49,7 +44,7 @@ a{
 	border-left:					1px solid #4e4e4e;
 	margin:							0 2px 0 0;
 }
-#admin_nav li .active{
+#nav li .active{
 	display:						block;
 	float:							left;
 	text-decoration:				none;
@@ -59,7 +54,7 @@ a{
 	background:						#4e4e4e;
 	color:							#fff;
 }
-#admin_nav li a{
+#nav li a{
 	display:						block;
 	float:							left;
 	color:							#4e4e4e;

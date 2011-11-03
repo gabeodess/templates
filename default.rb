@@ -11,12 +11,18 @@ def generator(path)
   copy_directory(path, "lib/generators/#{path.match(/[a-zA-Z]+$/)}")
 end
 
+def rvm(command)
+  run command
+end
+
 @todos ||= []
 
-gemset = ask("What would you like your gemset to be called?")
-rvmrc = "rvm use --create 1.9.2@#{gemset}"
+@gemset = ask("What would you like your gemset to be called?")
+@ruby_version = "1.9.2"
+rvmrc = "rvm use --create #{@ruby_version}@#{@gemset}"
 file ".rvmrc", rvmrc
 run rvmrc
+rvm "gem install bundler"
 
 # =======
 # = LIB =
@@ -32,17 +38,17 @@ file "config/initializers/load_config.rb", open('../templates/initializers/load_
 # ===============
 # = STYLESHEETS =
 # ===============
-file "public/stylesheets/application.css", open("../templates/stylesheets/application.css").read
-file "public/stylesheets/gallery.css", open('../templates/stylesheets/gallery.css').read
-file "public/stylesheets/overlay.css", open('../templates/stylesheets/overlay.css').read
-file "public/stylesheets/validation.css", open('../templates/stylesheets/validation.css').read
-file "public/stylesheets/dataTables.css", open('../templates/stylesheets/dataTables.css').read
+file "app/assets/stylesheets/application.css", open("../templates/stylesheets/application.css").read
+file "app/assets/stylesheets/gallery.css", open('../templates/stylesheets/gallery.css').read
+file "app/assets/stylesheets/overlay.css", open('../templates/stylesheets/overlay.css').read
+file "app/assets/stylesheets/validation.css", open('../templates/stylesheets/validation.css').read
+file "app/assets/stylesheets/dataTables.css", open('../templates/stylesheets/dataTables.css').read
 
 
 # ===============
 # = JAVASCRIPTS =
 # ===============
-copy_directory "../templates/javascripts/*", "public/javascripts"
+copy_directory "../templates/javascripts/*", "app/assets/javascripts"
 
 # ========
 # = ERBs =
@@ -68,7 +74,7 @@ file "app/helpers/nav_helper.rb", open('../templates/helpers/nav_helper.rb').rea
 # ==========
 # = IMAGES =
 # ==========
-copy_directory "../templates/images/*", "public/images"
+copy_directory "../templates/images/*", "app/assets/images"
 
 # ================
 # = INITIALIZERS =
@@ -92,6 +98,7 @@ file("lib/generators/nifty.rb", File.read(File.expand_path("../generators/nifty.
 # ===========
 gem "will_paginate", "3.0.pre2"
 gem "meta_search"
+gem 'ruby-debug19', :require => 'ruby-debug', :group => [:test, :development]
 
 if yes?('Do you want to use Paperclip?')
   gem "paperclip", '>= 2.3.3', :git => "http://github.com/thoughtbot/paperclip.git"
@@ -108,7 +115,7 @@ if auth = yes?("Do you want to use user authentication?")
   
   generator(File.expand_path("../generators/authentication", __FILE__))
   
-  run "bundle install"
+  rvm "bundle install"
   generate :authentication, "#{name} sessions"
   
   if yes?("Do you want to use declarative authorization?")
@@ -148,7 +155,7 @@ END
 File.open(".gitignore", "a"){ |f| f.puts gitignore } 
 
 run "cp config/database.yml config/example_database.yml"
-run "bundle install"
+rvm "bundle install"
 run "rake db:migrate"
 
 # git :init
