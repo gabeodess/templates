@@ -16,12 +16,24 @@ class String #:nodoc:
     self.match(Regex.email)
   end
   
+  def phone?
+    self.gsub(/[ -\.\)\(]/, '').gsub(/^1/, '').match(/^\d{10}$/)
+  end
+  
   # =========
   # = Regex =
   # =========
   class Regex
     def self.email
       /^.+@.+\.[a-z]+$/
+    end
+    
+    def self.login
+      /^[a-zA-Z0-9\-_]+$/
+    end
+    
+    def self.zip_code
+      /^\d{5}$/
     end
   end
   

@@ -22,9 +22,9 @@ module Paperclip
   end
 end
 
-PAPERCLIP_URL = "paperclip/:class/:attachment/:id/:style/:filename.:extension"
+PAPERCLIP_URL = "assets-url/paperclip/:class/:attachment/:id/:style/:basename.:extension"
 PAPERCLIP_SETTINGS = {
-  :path => Rails.root.join('public', PAPERCLIP_URL).to_s,
+  :path => Rails.root.join('public/assets-path', PAPERCLIP_URL).to_s,
   :url => PAPERCLIP_URL,
   :convert_options => { :all => '-strip -colorspace RGB'}
 }

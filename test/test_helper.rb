@@ -68,7 +68,7 @@ class ActiveSupport::TestCase
     
   def do_login_required(http_method, uri, params = {}, session_options = {})
     send(http_method, uri, params, session_options)
-    assert @response.redirect_url.match(log_in_url), @response.redirect_url
+    assert @response.redirect_url.match(login_url), @response.redirect_url
     assert flash[:notice]
   end
 

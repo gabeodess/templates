@@ -86,6 +86,7 @@ File.open("config/initializers/mime_types.rb", 'a'){ |f| f.puts(
 initializer('mime_types.txt'){ open('../templates/initializers/mime_types.txt').read  }
 # initializer('fields_with_errors.rb'){ open('../templates/initializers/fields_with_errors.rb').read  }
 initializer('string.rb'){ open('../templates/initializers/string.rb').read  }
+initializer('datetime_formats.rb'){ open('../templates/initializers/datetime_formats.rb').read  }
 
 # ==============
 # = Generators =
@@ -99,6 +100,9 @@ file("lib/generators/nifty.rb", File.read(File.expand_path("../generators/nifty.
 gem "will_paginate", "3.0.2"
 gem "meta_search"
 gem 'ruby-debug19', :require => 'ruby-debug', :group => [:test, :development]
+gem 'factory_girl_rails', :group => [:test]
+gem 'autotest', :group => [:test]
+gem 'redgreen', :group => [:test]
 
 if yes?('Do you want to use Paperclip?')
   gem "paperclip", '>= 2.3.3', :git => "http://github.com/thoughtbot/paperclip.git"
