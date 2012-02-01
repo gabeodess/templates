@@ -17,26 +17,15 @@ class ActiveSupport::TestCase
   # ===============
   # = Functionals =
   # ===============
-  def get_404(*args)
-    begin
-      get(*args)
-      assert_response 404, "Record was found."
-    rescue ActiveRecord::RecordNotFound => e
-      assert e.class == ActiveRecord::RecordNotFound, e.inspect
-    end
-  end
-
-  def get_permission_denied(*args)
-    get(*args)
-    assert_response 403
-  end
-    
   def method_missing(*args)
     uri = args[1]
     params = args[2] || {}
     session_options = args[3] || {}
     
     case args[0].to_s
+    when /^(get|put|post|delete)_404$/
+      http_method = args[0].to_s.match(/^(get|put|post|delete)/).to_s
+      do_404(http_method, uri, params, session_options)
     when /^(get|put|post|delete)_permission_denied$/
       http_method = args[0].to_s.gsub(/_permission_denied$/, '')
       do_permission_denied(http_method, uri, params, session_options)
@@ -53,6 +42,15 @@ class ActiveSupport::TestCase
       do_template(http_method, template, uri, params, session_options)
     else
       super
+    end
+  end
+
+  def do_404(http_method, uri, params, session_options)
+    begin
+      send(http_method, uri, params, session_options)
+      assert_response 404, "Record was found."
+    rescue ActiveRecord::RecordNotFound => e
+      assert e.class == ActiveRecord::RecordNotFound, e.inspect
     end
   end
   

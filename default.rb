@@ -12,17 +12,17 @@ def generator(path)
 end
 
 def rvm(command)
-  run command
+  run [@rvmrc, command].join(' && ')
 end
 
 @todos ||= []
 
 @gemset = ask("What would you like your gemset to be called?")
-@ruby_version = "1.9.2"
-rvmrc = "rvm use --create #{@ruby_version}@#{@gemset}"
-file ".rvmrc", rvmrc
-run rvmrc
-rvm "gem install bundler"
+@ruby_version = "1.9.3-p0"
+@rvmrc = "rvm use --create #{@ruby_version}@#{@gemset}"
+file ".rvmrc", @rvmrc
+# run @rvmrc
+# rvm "gem install bundler"
 
 # =======
 # = LIB =
@@ -38,7 +38,8 @@ file "config/initializers/load_config.rb", open('../templates/initializers/load_
 # ===============
 # = STYLESHEETS =
 # ===============
-file "app/assets/stylesheets/application.css", open("../templates/stylesheets/application.css").read
+# file "app/assets/stylesheets/application.css", open("../templates/stylesheets/application.css").read
+run "cat ../templates/stylesheets/application.css >> app/assets/stylesheets/application.css"
 file "app/assets/stylesheets/gallery.css", open('../templates/stylesheets/gallery.css').read
 file "app/assets/stylesheets/overlay.css", open('../templates/stylesheets/overlay.css').read
 file "app/assets/stylesheets/validation.css", open('../templates/stylesheets/validation.css').read
@@ -99,17 +100,15 @@ file("lib/generators/nifty.rb", File.read(File.expand_path("../generators/nifty.
 # ===========
 gem "will_paginate", "3.0.2"
 gem "meta_search"
-gem 'ruby-debug19', :require => 'ruby-debug', :group => [:test, :development]
 gem 'factory_girl_rails', :group => [:test]
-gem 'autotest', :group => [:test]
-gem 'redgreen', :group => [:test]
+gem 'guard-spork', :group => [:test]
+gem 'guard-test', :group => [:test]
 
 if yes?('Do you want to use Paperclip?')
   gem "paperclip", '>= 2.3.3', :git => "http://github.com/thoughtbot/paperclip.git"
   initializer('paperclip.rb'){ open('../templates/initializers/paperclip.rb').read  }
   file 'app/helpers/paperclip_helper.rb', open('../templates/helpers/paperclip_helper.rb').read
   run 'cp ../templates/controllers/paperclip_controller.rb app/controllers/paperclip_controller.rb'
-  # route "map.paperclip '/paperclip/:class_name/:id/:attachment', :controller => 'paperclip', :action => 'destroy', :method => :delete"
   route "delete '/paperclip/:class_name/:id/:attachment' => 'paperclip#destroy', :as => 'paperclip'"
 end
 
@@ -159,12 +158,14 @@ END
 File.open(".gitignore", "a"){ |f| f.puts gitignore } 
 
 run "cp config/database.yml config/example_database.yml"
-rvm "bundle install"
-run "rake db:migrate"
+# rvm "bundle install"
+# run "rake db:migrate"
 
 # git :init
 # git :add => "."
 # git :commit => "-a -m 'initial commit'"
+@todos << 'Run: bundle install'
+@todos << 'Run: rake db:migrate'
 
 unless @todos.blank?
   puts "\n\n-----------------------------------------------------------------"
